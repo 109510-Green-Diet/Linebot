@@ -33,7 +33,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
     //------------------
     // 處理加入會員意圖
     //------------------  
-    function customerJoin(){
+    function userJoin(){
         //回覆文字
         agent.add('歡迎你!!');
 
@@ -85,7 +85,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
     let intentMap = new Map();
     
     intentMap.set('Default Welcome Intent', welcome);  //歡迎意圖
-    intentMap.set('customer join', customerJoin);      //加入會員意圖
+    intentMap.set('user join', userJoin);      //加入會員意圖
 
     agent.handleRequest(intentMap);
 })
