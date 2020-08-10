@@ -1,0 +1,20 @@
+{
+  "name": "myApp",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "set NODE_TLS_REJECT_UNAUTHORIZED=0 && node ."
+  },
+  "dependencies": {
+    "actions-on-google": "^2.4.1",
+    "auth-header": "^1.0.0",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.0",
+    "dialogflow": "^0.6.0",
+    "dialogflow-fulfillment": "^0.6.1",
+    "express": "^4.16.4",
+    "pg": "^7.18.2"
+  }
+}
