@@ -11,11 +11,11 @@ var add = async function(newData){
     var result;  
 
     //寫入資料表
-    await sql('INSERT INTO project.user (user_account) VALUES ($1) ', [newData.user_account])
+    await sql('INSERT INTO project.user (user_account) VALUES ($1)', [newData.user_account])
         .then((data) => {
             result = 0;   //寫入成功
         }, (error) => {
-            result = -1;  //寫入錯誤
+            result = -9;  //寫入錯誤
         });
 
     //回傳執行結果
