@@ -4,7 +4,7 @@
 const query = require('./asyncDB');
 
 //---------------------------------
-// 加入會員 (寫id到customer資料表)
+// 加入會員 (寫id到user資料表)
 //---------------------------------
 var add = async function(user_account){
     //存放結果

@@ -6,7 +6,7 @@ const {Text, Card, Image, Suggestion, Payload} = require('dialogflow-fulfillment
 const app = express()
 
 //增加引用模組
-const customer = require('./utility/customer');
+const user = require('./utility/user');
 
 //============================
 // 處理各種意圖
@@ -40,8 +40,8 @@ app.post('/dialogflow', express.json(), (request, response) => {
         //取得會員的LineID
         var user_account = request.body.originalDetectIntentRequest.payload.data.source.userId;
 
-        //呼叫customer模組, 寫入會員資料
-        return customer.add(user_account).then(data => {  
+        //呼叫user模組, 寫入會員資料
+        return user.add(user_account).then(data => {  
             if (data == -9){
                 //回覆文字
                 agent.add('喔, 你的會員原本就存在!');
