@@ -15,7 +15,7 @@ var add = async function(newData){
         .then((data) => {
             result = 0;   //寫入成功
         }, (error) => {
-            result = -9;  //寫入錯誤
+            result = -1;  //寫入錯誤
         });
 
     //回傳執行結果
