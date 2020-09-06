@@ -93,7 +93,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
         agent.add('查看的食譜是:' + recipe_name);
 
         //呼叫menu模組, 取出分類菜單
-        return project.recipe.showrecipe(recipe_name).then(data => {
+        return recipe.showrecipe(recipe_name).then(data => {
             if (data == -9) {
                 //回覆文字            
                 agent.add('喔, 讀取資料錯誤(程式或資料庫出錯)!');
