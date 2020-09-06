@@ -78,6 +78,361 @@ app.post('/dialogflow', express.json(), (request, response) => {
         });
     }
 
+    
+    //----------------------- 
+    // 處理查看分類菜單意圖
+    //-----------------------     
+    function showrecipe() {
+        //取得分類
+
+        var recipe_name = request.body.queryResult.parameters.recipe_name;
+
+        //回覆文字
+        agent.add('查看的食譜是:' + recipe_name);
+
+        //呼叫menu模組, 取出分類菜單
+        return recipe.showrecipe(recipe_name).then(data => {
+            if (data == -9) {
+                //回覆文字            
+                agent.add('喔, 讀取資料錯誤(程式或資料庫出錯)!');
+            } else if (data.length == 0) {
+                //回覆文字              
+                agent.add('喔, 目前沒有內容!');
+
+                //回覆貼圖   
+                var lineMessage = {
+                    "type": "sticker",
+                    "packageId": "1",
+                    "stickerId": "3"
+                };
+
+                var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
+                agent.add(payload);
+            } else {
+                var cs = []
+
+                //回覆圖文選單 
+                for (var i = 0; i < data.length; i++) {
+                    cs.push({
+                        "thumbnailImageUrl": data[i].pic,
+                        "imageBackgroundColor": "#FFFFFF",
+                        "title": data[i].recipe_name,
+                        "text": "全榖雜糧類:" + data[i].grains_portion + "份" + "\n" + "蔬菜類:" + data[i].vegetables_portion + "份" + "\n" + "豆魚蛋肉類:" + data[i].meatsandprotein_portion + "份" + "\n" + "乳品類:" + data[i].dairy_portion + "份" + "\n" + "水果類:" + data[i].fruit_portion + "份" + "\n" + "油脂與堅果種子類:" + data[i].fats_portion + "份",
+                        "actions": [{
+                            "type": "message",
+                            "label": "查看食譜",
+                            "text": "查看" + data[i].recipe_name + "完整食譜"
+
+                        }]
+                    })
+                }
+
+                var lineMessage = {
+                    "type": "template",
+                    "altText": "這是一個Carousel圖文選單樣板",
+                    "template": {
+                        "type": "carousel",
+                        "columns": cs,
+                        "imageAspectRatio": "square",
+                        "imageSize": "cover"
+                    }
+                };
+
+                var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
+                agent.add(payload);
+            }
+        });
+    }
+
+    //-----------------------
+    // 顯示食譜
+    //-----------------------     
+    function findrecipe() {
+        //取得分類
+        var recipe_name = request.body.queryResult.parameters.recipe_name;
+
+        return recipe.findrecipe(recipe_name).then(data => {
+            if (data == -9) {
+                //回覆文字            
+                agent.add('喔, 讀取資料錯誤(程式或資料庫出錯)!');
+            } else if (data.length == 0) {
+                //回覆文字              
+                agent.add('喔, 目前沒有內容!');
+
+                //回覆貼圖   
+                var lineMessage = {
+                    "type": "sticker",
+                    "packageId": "1",
+                    "stickerId": "3"
+                };
+
+                var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
+                agent.add(payload);
+            } else {
+                var grains_portion = data[0].grains_portion;
+                var vegetables_portion = data[0].vegetables_portion;
+                var meatsandprotein_portion = data[0].meatsandprotein_portion;
+                var dairy_portion = data[0].dairy_portion;
+                var fruit_portion = data[0].fruit_portion;
+                var fats_portion = data[0].fats_portion;
+                var seasoning_use = data[0].seasoning_use;
+                var rc_content = data[0].rc_content;
+                //回覆文字
+                /*
+                agent.add('查看的食譜是:' + re_title);
+                agent.add('營養標示:' + "\n" + '全榖雜糧類:' + grains_portion + '份' + '\n' + '蔬菜類:' + vegetables_portion + '份' + '\n' + '豆魚蛋肉類:' + meatsandprotein_portion + '份' + '\n' + '乳品類:' + dairy_portion + '份' + '\n' + '水果類:' + fruit_portion + '份' + '\n' + '油脂與堅果種子類:' + fats_portion + '份');
+                agent.add('食材:' + '\n' + seasoning_use + '\n' + '步驟:' + '\n' + rc_content);
+                */
+               
+                var lineMessage = {
+                    "type": "flex",
+                    "altText": "This is a Flex Message",
+                    "contents": {
+                        "type": "bubble",
+                        /* "styles": {
+                             "header": {
+                                 "backgroundColor": "#ffaaaa"
+                             },
+                             "body": {
+                                 "backgroundColor": "#aaffaa"
+                             },
+                             "footer": {
+                                 "backgroundColor": "#aaaaff"
+                             }
+                         },*/
+                        "header": {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": recipe_name,
+                                    "weight": "bold",
+                                    "size": "xl",
+                                    "margin": "md"
+                                },
+                                {
+                                    "type": "separator",
+                                    "margin": "xxl"
+                                },
+                                {
+                                    "type": "box",
+                                    "layout": "vertical",
+                                    "margin": "xxl",
+                                    "spacing": "sm",
+                                    "contents": [
+                                        {
+                                            "type": "text",
+                                            "text": "營養分類",
+                                            "weight": "bold",
+                                            "color": "#1DB446",
+                                            "size": "md"
+                                        },
+                                        {
+                                            "type": "box",
+                                            "layout": "horizontal",
+                                            "contents": [
+                                                {
+                                                    "type": "text",
+                                                    "text": "全榖雜糧類",
+                                                    "size": "sm",
+                                                    "color": "#555555",
+                                                },
+                                                {
+                                                    "type": "text",
+                                                    "text": grains_portion + "份",
+                                                    "size": "sm",
+                                                    "color": "#111111",
+                                                    "align": "end"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "box",
+                                            "layout": "horizontal",
+                                            "contents": [
+                                                {
+                                                    "type": "text",
+                                                    "text": "蔬菜類",
+                                                    "size": "sm",
+                                                    "color": "#555555",
+                                                },
+                                                {
+                                                    "type": "text",
+                                                    "text": vegetables_portion + "份",
+                                                    "size": "sm",
+                                                    "color": "#111111",
+                                                    "align": "end"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "box",
+                                            "layout": "horizontal",
+                                            "contents": [
+                                                {
+                                                    "type": "text",
+                                                    "text": "豆魚蛋肉類",
+                                                    "size": "sm",
+                                                    "color": "#555555",
+                                                },
+                                                {
+                                                    "type": "text",
+                                                    "text": meatsandprotein_portion + "份",
+                                                    "size": "sm",
+                                                    "color": "#111111",
+                                                    "align": "end"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "box",
+                                            "layout": "horizontal",
+                                            "contents": [
+                                                {
+                                                    "type": "text",
+                                                    "text": "乳品類",
+                                                    "size": "sm",
+                                                    "color": "#555555",
+                                                },
+                                                {
+                                                    "type": "text",
+                                                    "text": dairy_portion + "份",
+                                                    "size": "sm",
+                                                    "color": "#111111",
+                                                    "align": "end"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "box",
+                                            "layout": "horizontal",
+                                            "contents": [
+                                                {
+                                                    "type": "text",
+                                                    "text": "水果類",
+                                                    "size": "sm",
+                                                    "color": "#555555",
+                                                },
+                                                {
+                                                    "type": "text",
+                                                    "text": fruit_portion + "份",
+                                                    "size": "sm",
+                                                    "color": "#111111",
+                                                    "align": "end"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "box",
+                                            "layout": "horizontal",
+                                            "contents": [
+                                                {
+                                                    "type": "text",
+                                                    "text": "油脂與堅果種子類",
+                                                    "size": "sm",
+                                                    "color": "#555555",
+                                                },
+                                                {
+                                                    "type": "text",
+                                                    "text": fats_portion + "份",
+                                                    "size": "sm",
+                                                    "color": "#111111",
+                                                    "align": "end"
+                                                }
+                                            ]
+                                        },
+                                    ]
+                                },
+                                {
+                                    "type": "separator",
+                                    "margin": "xxl"
+                                },
+                                {
+                                    "type": "box",
+                                    "layout": "vertical",
+                                    "margin": "xxl",
+                                    "spacing": "sm",
+                                    "contents": [
+                                        {
+                                            "type": "text",
+                                            "text": "食材",
+                                            "weight": "bold",
+                                            "color": "#1DB446",
+                                            "size": "md"
+                                        },
+                                        {
+                                            "type": "box",
+                                            "layout": "vertical",
+                                            "contents": [
+                                                {
+                                                    "type": "text",
+                                                    "text": seasoning_use,
+                                                    "size": "sm",
+                                                    "color": "#555555",
+                                                },
+
+                                            ]
+                                        },
+                                    ]
+                                },
+                                {
+                                    "type": "separator",
+                                    "margin": "xxl"
+                                },
+                                {
+                                    "type": "box",
+                                    "layout": "vertical",
+                                    "margin": "xxl",
+                                    "spacing": "sm",
+                                    "contents": [
+                                        {
+                                            "type": "text",
+                                            "text": "步驟",
+                                            "weight": "bold",
+                                            "color": "#1DB446",
+                                            "size": "md"
+                                        },
+                                        {
+                                            "type": "box",
+                                            "layout": "vertical",
+                                            
+                                            "contents": [
+                                                {
+                                                    "type": "text",
+                                                    "text": rc_content,
+                                                    "size": "md",
+                                                    "color": "#555555",
+                                                    "wrap": true,
+                                                },
+
+                                            ]
+                                        },
+                                    ]
+                                },
+
+                            ]
+
+                        },/*
+                        "footer": {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": "footer"
+                                }
+                            ]
+                        }*/
+                    }
+                };
+                var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
+                agent.add(payload);
+
+            }
+        });
+
+    }
 
     //-----------------------------
     // 設定對話中各個意圖的函式對照
@@ -86,7 +441,8 @@ app.post('/dialogflow', express.json(), (request, response) => {
     
     intentMap.set('Default Welcome Intent', welcome);  //歡迎意圖
     intentMap.set('user join', userJoin);      //加入會員意圖
-
+    intentMap.set('find recipe', findrecipe);   //查看菜單意圖
+    intentMap.set('show recipe', showrecipe);  //查看分類菜單
     agent.handleRequest(intentMap);
 })
 
