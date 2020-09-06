@@ -7,6 +7,7 @@ const app = express()
 
 //增加引用模組
 const user = require('./utility/user');
+const recipe = require('./utility/recipe');
 
 //============================
 // 處理各種意圖
