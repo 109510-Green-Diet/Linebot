@@ -37,7 +37,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
     //------------------  
     function userJoin(){
         //回覆文字
-        agent.add('歡迎你!!');
+        agent.add('歡迎你!!!');
 
         //取得會員的LineID
         var user_account = request.body.originalDetectIntentRequest.payload.data.source.userId;
