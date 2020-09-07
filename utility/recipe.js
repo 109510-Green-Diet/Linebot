@@ -12,7 +12,7 @@ var showrecipe = async function(recipe_name){
     let result;  
     recipe_name = "%" + recipe_name + "%";
     //讀取資料庫
-    await query('SELECT * FROM recipe WHERE recipe_name like $1 order by random() limit 10', [recipe_name])
+    await query('SELECT * FROM project.recipe WHERE recipe_name like $1 order by random() limit 10', [recipe_name])
         .then((data) => {
             result = data.rows;   //查詢成功
         }, (error) => {
