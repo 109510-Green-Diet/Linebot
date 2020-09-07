@@ -134,7 +134,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 }
 
                 console.log(cs);
-                var lineMessage = {
+                /*var lineMessage = {
                     "type": "template",
                     "altText": "這是一個Carousel圖文選單樣板",
                     "template": {
@@ -143,8 +143,14 @@ app.post('/dialogflow', express.json(), (request, response) => {
                         "imageAspectRatio": "square",
                         "imageSize": "cover"
                     }
-                };
+                };*/
 
+                var lineMessage = {
+                    "type": "sticker",
+                    "packageId": "1",
+                    "stickerId": "3"
+                };
+                
                 var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
                 agent.add(payload);
             }
