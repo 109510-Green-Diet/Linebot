@@ -120,7 +120,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 //回覆圖文選單 
                 for (var i = 0; i < data.length; i++) {
                     cs.push({
-                        "thumbnailImageUrl": "/pic"+ data[i].pic,
+                        "thumbnailImageUrl": "https://localhost:3000/pic"+ data[i].pic,
                         "imageBackgroundColor": "#FFFFFF",
                         "title": data[i].recipe_name,
                         "text": "全榖雜糧類:" + data[i].grains_portion + "份" + "\n" + "蔬菜類:" + data[i].vegetables_portion + "份" + "\n" + "豆魚蛋肉類:" + data[i].meatsandprotein_portion + "份" + "\n" + "乳品類:" + data[i].dairy_portion + "份" + "\n" + "水果類:" + data[i].fruit_portion + "份" + "\n" + "油脂與堅果種子類:" + data[i].fats_portion + "份",
