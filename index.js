@@ -93,7 +93,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
 
         //呼叫menu模組, 取出分類菜單
         return recipe.showrecipe(recipe_name).then(data => {
-            console.log(data);
+            //console.log(data);
             if (data == -9) {
                 //回覆文字            
                 agent.add('喔, 讀取資料錯誤(程式或資料庫出錯)!');
