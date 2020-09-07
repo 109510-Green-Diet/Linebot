@@ -86,7 +86,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
     //-----------------------     
     function showrecipe() {
         //取得分類
-
+        console.log(123);
         var recipe_name = request.body.queryResult.parameters.recipe_name;
 
         //回覆文字
@@ -94,6 +94,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
 
         //呼叫menu模組, 取出分類菜單
         return recipe.showrecipe(recipe_name).then(data => {
+            console.log(data);
             if (data == -9) {
                 //回覆文字            
                 agent.add('喔, 讀取資料錯誤(程式或資料庫出錯)!');
