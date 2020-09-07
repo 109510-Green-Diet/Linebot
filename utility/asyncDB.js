@@ -19,18 +19,14 @@ function query(sql, value=null) {
             ssl: true
         })  
         
-        console.log(1);
 
         //連結資料庫
         client.connect();
-        console.log(2);
         //回覆查詢結果  
         client.query(sql, value, (err, results) => {                   
             if (err){
-                console.log('err');
                 reject(err);
             }else{
-                console.log('results');
                 resolve(results);
             }
 

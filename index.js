@@ -86,7 +86,6 @@ app.post('/dialogflow', express.json(), (request, response) => {
     //-----------------------     
     function showrecipe() {
         //取得分類
-        console.log(123);
         var recipe_name = request.body.queryResult.parameters.recipe_name;
 
         //回覆文字
