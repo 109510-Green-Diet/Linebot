@@ -95,9 +95,11 @@ app.post('/dialogflow', express.json(), (request, response) => {
         return recipe.showrecipe(recipe_name).then(data => {
             //console.log(data);
             if (data == -9) {
+                console.log('data == -9');
                 //回覆文字            
                 agent.add('喔, 讀取資料錯誤(程式或資料庫出錯)!');
             } else if (data.length == 0) {
+                console.log('data.length == 0');
                 //回覆文字              
                 agent.add('喔, 目前沒有內容!');
 
@@ -111,6 +113,8 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
                 agent.add(payload);
             } else {
+                console.log('data.length');
+                console.log(data.length);
                 var cs = []
 
                 //回覆圖文選單 
@@ -129,6 +133,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                     })
                 }
 
+                console.log(cs);
                 var lineMessage = {
                     "type": "template",
                     "altText": "這是一個Carousel圖文選單樣板",
