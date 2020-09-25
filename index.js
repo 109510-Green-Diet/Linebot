@@ -466,7 +466,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
 
         //呼叫customer模組, 填入客戶姓名
         return information.fillheight(user_account, height, weight, infono).then(data => {
-            console.log("*****");
+            console.log(user_account);
             console.log(weight);
             console.log(infono);
             console.log(height);
