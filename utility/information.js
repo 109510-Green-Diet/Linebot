@@ -11,7 +11,7 @@ var BMIcal = async function (user_account) {
     let result;
 
     //讀取資料表
-    await query('SELECT * FROM information WHERE user_account = $1 order by infono desc', [user_account])
+    await query('SELECT * FROM project.information WHERE user_account = $1 order by infono desc', [user_account])
         .then((data) => {
             result = data.rows;   //查詢成功
         }, (error) => {
@@ -30,7 +30,7 @@ var fillheight = async function(user_account, height, weight, infono){
     let result;  
     console.log(user_account);
     //寫入點餐資料表
-    await query('INSERT INTO information (user_account, height, weight, infono) VALUES ($1, $2, $3, $4)', [user_account, height, weight, infono])
+    await query('INSERT INTO project.information (user_account, height, weight, infono) VALUES ($1, $2, $3, $4)', [user_account, height, weight, infono])
         .then((data) => {
             result = 0;    //新增成功
         }, (error) => {
