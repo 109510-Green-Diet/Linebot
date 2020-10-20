@@ -11,7 +11,7 @@ var BMIcal = async function (user_account) {
     let result;
 
     //讀取資料表
-    await query('SELECT * FROM project.information WHERE user_account = $1 order by infono desc', [user_account])
+    await query('SELECT a.user_account, a.height, a.weight, a.info, b.actno FROM project.information a, project.user b WHERE user_account = $1 and a.user_account = b.user_account order by infono desc', [user_account])
         .then((data) => {
             result = data.rows;   //查詢成功
         }, (error) => {
