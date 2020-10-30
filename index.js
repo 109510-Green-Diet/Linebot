@@ -42,7 +42,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
 
         //取得會員的LineID
         var user_account = request.body.originalDetectIntentRequest.payload.data.source.userId;
-
+        console.log(user_account);
         //呼叫user模組, 寫入會員資料
         return user.add(user_account).then(data => {
             if (data == -9) {
