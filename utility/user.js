@@ -1,7 +1,7 @@
 'use strict';
 
 //引用操作資料庫的物件
-const query = require('./asyncDB');
+const sql = require('./asyncDB');
 
 //---------------------------------
 // 加入會員 (寫id到user資料表)
