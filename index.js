@@ -123,7 +123,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                         "thumbnailImageUrl": "https://eat10556ntub.herokuapp.com/pic/" + data[i].pic,
                         "imageBackgroundColor": "#FFFFFF",
                         "title": data[i].recipe_name,
-                        "text": "全榖雜糧類:" + data[i].grains_portion + "份" + "\n" + "蔬菜類:" + data[i].vegetables_portion + "份" + "\n" + "豆魚蛋肉類:" + data[i].meatsandprotein_portion + "份" + "\n" + "乳品類:" + data[i].dairy_portion + "份" + "\n" + "水果類:" + data[i].fruit_portion + "份" + "\n" + "油脂與堅果種子類:" + data[i].fats_portion + "份",
+                        "text": "熱量:" + data[i].calories + "大卡",
                         "actions": [{
                             "type": "message",
                             "label": "查看食譜",
