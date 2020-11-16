@@ -9,6 +9,7 @@ const app = express()
 const user = require('./utility/user');
 const recipe = require('./utility/recipe');
 const information = require('./utility/information');
+const active = require('./utility/active');
 
 //============================
 // 處理各種意圖
@@ -80,26 +81,42 @@ app.post('/dialogflow', express.json(), (request, response) => {
         });
     }
 
+    //------------------
+    // 處理查詢食譜意圖
+    //------------------   
+    function searchrecipe() {
+        //回覆文字
+        agent.add('請輸入你想查詢的食譜名稱~');
+
+
+    }
 
     //----------------------- 
-    // 處理查看分類菜單意圖
+    // 處理查看食譜類別
     //-----------------------     
     function showrecipe() {
+
         //取得分類
         var recipe_name = request.body.queryResult.parameters.recipe_name;
+        //回覆文字            
 
-        //回覆文字
-        agent.add('查看的食譜是:' + recipe_name);
-
-        //呼叫menu模組, 取出分類菜單
+        //呼叫recipe模組, 取出食譜
         return recipe.showrecipe(recipe_name).then(data => {
             //console.log(data);
             if (data == -9) {
                 console.log('data == -9');
                 //回覆文字            
                 agent.add('喔, 讀取資料錯誤(程式或資料庫出錯)!');
-            } else if (data.length == 0) {
-                console.log('data.length == 0');
+
+                //回覆貼圖   
+                var lineMessage = {
+                    "type": "sticker",
+                    "packageId": "1",
+                    "stickerId": "16"
+                };
+
+            } else if (data == 0) {
+
                 //回覆文字              
                 agent.add('喔, 目前沒有內容!');
 
@@ -162,7 +179,14 @@ app.post('/dialogflow', express.json(), (request, response) => {
             if (data == -9) {
                 //回覆文字            
                 agent.add('喔, 讀取資料錯誤(程式或資料庫出錯)!');
-            } else if (data.length == 0) {
+
+                //回覆貼圖   
+                var lineMessage = {
+                    "type": "sticker",
+                    "packageId": "1",
+                    "stickerId": "16"
+                };
+            } else if (data == 0) {
                 //回覆文字              
                 agent.add('喔, 目前沒有內容!');
 
@@ -178,35 +202,18 @@ app.post('/dialogflow', express.json(), (request, response) => {
             } else {
                 var grains_portion = data[0].grains_portion;
                 var vegetables_portion = data[0].vegetables_portion;
-                var meatsandprotein_portion = data[0].meatsandprotein_portion;
+                var bean_portion = data[0].bean_portion;
                 var dairy_portion = data[0].dairy_portion;
                 var fruit_portion = data[0].fruit_portion;
                 var fats_portion = data[0].fats_portion;
                 var seasoning_use = data[0].seasoning_use;
                 var rc_content = data[0].rc_content;
-                //回覆文字
-                /*
-                agent.add('查看的食譜是:' + re_title);
-                agent.add('營養標示:' + "\n" + '全榖雜糧類:' + grains_portion + '份' + '\n' + '蔬菜類:' + vegetables_portion + '份' + '\n' + '豆魚蛋肉類:' + meatsandprotein_portion + '份' + '\n' + '乳品類:' + dairy_portion + '份' + '\n' + '水果類:' + fruit_portion + '份' + '\n' + '油脂與堅果種子類:' + fats_portion + '份');
-                agent.add('食材:' + '\n' + seasoning_use + '\n' + '步驟:' + '\n' + rc_content);
-                */
 
                 var lineMessage = {
                     "type": "flex",
                     "altText": "This is a Flex Message",
                     "contents": {
                         "type": "bubble",
-                        /* "styles": {
-                             "header": {
-                                 "backgroundColor": "#ffaaaa"
-                             },
-                             "body": {
-                                 "backgroundColor": "#aaffaa"
-                             },
-                             "footer": {
-                                 "backgroundColor": "#aaaaff"
-                             }
-                         },*/
                         "header": {
                             "type": "box",
                             "layout": "vertical",
@@ -279,13 +286,13 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                             "contents": [
                                                 {
                                                     "type": "text",
-                                                    "text": "豆魚蛋肉類",
+                                                    "text": "豆類",
                                                     "size": "sm",
                                                     "color": "#555555",
                                                 },
                                                 {
                                                     "type": "text",
-                                                    "text": meatsandprotein_portion + "份",
+                                                    "text": bean_portion + "份",
                                                     "size": "sm",
                                                     "color": "#111111",
                                                     "align": "end"
@@ -408,7 +415,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                                 {
                                                     "type": "text",
                                                     "text": rc_content,
-                                                    "size": "md",
+                                                    "size": "sm",
                                                     "color": "#555555",
                                                     "wrap": true,
                                                 },
@@ -420,17 +427,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
 
                             ]
 
-                        },/*
-                        "footer": {
-                            "type": "box",
-                            "layout": "vertical",
-                            "contents": [
-                                {
-                                    "type": "text",
-                                    "text": "footer"
-                                }
-                            ]
-                        }*/
+                        },
                     }
                 };
                 var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
@@ -924,6 +921,138 @@ app.post('/dialogflow', express.json(), (request, response) => {
         });
     }
 
+    //----------------------- 
+    // 處理活動量類別
+    //-----------------------     
+    function searchactive() {
+
+        //取得會員LineID
+        var user_account = request.body.originalDetectIntentRequest.payload.data.source.userId;
+        return active.searchactive(user_account).then(data => {
+            if (data == 0) {
+                //回覆文字  
+                agent.add('尚未加入會員! 可填寫以下加入會員:');
+                agent.add('想加入會員');
+
+                //加一張貼圖
+                var lineMessage = {
+                    "type": "sticker",
+                    "packageId": "1",
+                    "stickerId": "5"
+                };
+                var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
+                agent.add(payload);
+            } else {
+                var lineMessage = {
+                    "type": "template",
+                    "altText": "this is a carousel template",
+                    "template": {
+                        "type": "carousel",
+                        "columns": [
+                            {
+                                "imageBackgroundColor": "#FFFFFF",
+                                "title": "輕度活動量",
+                                "text": "大部分從事靜態或坐著的工作" + "\n" + "例如：家庭主婦、坐辦公室的上班族、售貨員等...",
+                                "actions": [
+                                    {
+                                        "type": "message",
+                                        "label": "輕度活動量",
+                                        "text": "A001" + "輕度活動量"
+                                    },
+                                ]
+                            },
+                            {
+                                "imageBackgroundColor": "#000000",
+                                "title": "中度活動量",
+                                "text": "從事機械操作、接待或家事等站立活動較多的工作" + "\n" + "例如：褓母、護士、服務生等...",
+                                "actions": [
+                                    {
+                                        "type": "message",
+                                        "label": "中度活動量",
+                                        "text": "A002" + "中度活動量"
+                                    },
+                                ]
+                            },
+                            {
+                                "imageBackgroundColor": "#000000",
+                                "title": "重度活動量",
+                                "text": "從事農耕、漁業、建築等的重度使用體力之工作" + "\n" + "例如：運動員、搬家工人等...",
+                                "actions": [
+                                    {
+                                        "type": "message",
+                                        "label": "重度活動量",
+                                        "text": "A003" + "重度活動量"
+                                    },
+                                ]
+                            }
+                        ],
+
+                    }
+
+
+                };
+                var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
+                agent.add(payload);
+            }
+        });
+
+    }
+
+    //-----------------------
+    // 處理選擇活動量意圖
+    //-----------------------     
+    function fillactive() {
+        //取得會員LineID
+        var user_account = request.body.originalDetectIntentRequest.payload.data.source.userId;
+
+        //取得活動量編號
+        var actno = request.body.queryResult.parameters.actno;
+
+        //呼叫active模組, 填入活動量編號
+        return active.fillactive(user_account, actno).then(data => {
+            console.log(user_account);
+            console.log("A001")
+            if (data == -9) {
+                //回覆文字             
+                agent.add('喔, 填寫錯誤!');
+
+                //回覆貼圖     
+                var lineMessage = {
+                    "type": "sticker",
+                    "packageId": "1",
+                    "stickerId": "9"
+                };
+
+                var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
+                agent.add(payload);
+            } else if (data == 0) {
+                //回覆文字  
+                agent.add('尚未加入會員! 可填寫以下加入會員:');
+                agent.add('想加入會員');
+
+                //加一張貼圖
+                var lineMessage = {
+                    "type": "sticker",
+                    "packageId": "1",
+                    "stickerId": "5"
+                };
+            } else {
+                //回覆文字             
+                agent.add('已填入活動量!');
+
+                //回覆貼圖     
+                var lineMessage = {
+                    "type": "sticker",
+                    "packageId": "1",
+                    "stickerId": "2"
+                };
+
+                var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
+                agent.add(payload);
+            }
+        });
+    }
+
     //----------------------------------------
     // 可直接取用檔案的資料夾
     //----------------------------------------
@@ -936,10 +1065,13 @@ app.post('/dialogflow', express.json(), (request, response) => {
 
     intentMap.set('Default Welcome Intent', welcome);  //歡迎意圖
     intentMap.set('user join', userJoin);      //加入會員意圖
+    intentMap.set('search recipe', searchrecipe);
     intentMap.set('find recipe', findrecipe);   //查看菜單意圖
     intentMap.set('show recipe', showrecipe);
     intentMap.set('check BMI and cal', BMIcal);
     intentMap.set('fill height', fillheight);
+    intentMap.set('search active', searchactive);
+    intentMap.set('fill active', fillactive);
     //查看分類菜單
     agent.handleRequest(intentMap);
 })
