@@ -455,13 +455,13 @@ app.post('/dialogflow', express.json(), (request, response) => {
         var infono = String(currentdate.getFullYear())
             + String('0' + (currentdate.getMonth() + 1)).substr(-2)
             + String('0' + currentdate.getDate()).substr(-2)
-            + String('0' + currentdate.getHours()).substr(-2)
+            + String('0' + (currentdate.getHours() + 8)).substr(-2)
             + String('0' + currentdate.getMinutes()).substr(-2)
             + String('0' + currentdate.getSeconds()).substr(-2)
             + String('0' + currentdate.getMilliseconds()).substr(-3);
 
         //呼叫customer模組, 填入客戶姓名
-        return information.fillheight(user_account, height, weight, infono).then(data => {
+        return information.fillheight(user_account, Math.round(height), Math.round(weight), infono).then(data => {
             console.log(user_account);
             console.log(weight);
             console.log(infono);
@@ -796,7 +796,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                             "contents": [
                                                 {
                                                     "type": "text",
-                                                    "text": "豆魚蛋肉類",
+                                                    "text": "豆類",
                                                     "size": "sm",
                                                     "color": "#555555",
                                                 },
