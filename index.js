@@ -209,6 +209,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var rc_content = data[0].rc_content;
 
                 console.log('aaa');
+                console.log(recipe_name);
                 var lineMessage = {
                     "type": "flex",
                     "altText": "This is a Flex Message",
