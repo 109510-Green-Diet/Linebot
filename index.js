@@ -205,7 +205,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var dairy_portion = data[0].dairy_portion;
                 var fruit_portion = data[0].fruit_portion;
                 var fats_portion = data[0].fats_portion;
-                var seasoning_use = data[0].seasoning_use;
+                var seasoning_portion = data[0].seasoning_portion;
                 var rc_content = data[0].rc_content;
 
                 var lineMessage = {
