@@ -83,6 +83,51 @@ app.post('/dialogflow', express.json(), (request, response) => {
     //------------------
     // 處理查詢食譜意圖
     //------------------   
+    function upin() {
+        //回覆文字
+        var lineMessage = {
+            "type": "template",
+            "altText": "this is a carousel template",
+            "template": {
+                "type": "carousel",
+                "columns": [
+                    {
+                        "imageBackgroundColor": "#FFFFFF",
+                        "title": "身高體重",
+                        "actions": [
+                            {
+                                "type": "message",
+                                "label": "更新身高體重",
+                                "text": "身高體重"
+                            },
+                        ]
+                    },
+                    {
+                        "imageBackgroundColor": "#000000",
+                        "title": "活動量",
+                        "actions": [
+                            {
+                                "type": "message",
+                                "label": "更新活動量",
+                                "text": "活動量"
+                            },
+                        ]
+                    },
+                ],
+
+            }
+
+
+        };
+        var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
+        agent.add(payload);
+
+
+    }
+
+    //------------------
+    // 處理查詢食譜意圖
+    //------------------   
     function searchrecipe() {
         //回覆文字
         agent.add('請輸入你想查詢的食譜名稱~');
@@ -1086,6 +1131,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 console.log('data.length == 0');
                 //回覆文字              
                 agent.add('喔, 目前沒有內容!');
+                agent.add('請輸入健康資料!');
 
                 //回覆貼圖   
                 var lineMessage = {
@@ -1158,6 +1204,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
     intentMap.set('search active', searchactive);
     intentMap.set('fill active', fillactive);
     intentMap.set('recommend recipe', recrecipe);
+    intentMap.set('update info', upin);
 
     //查看分類菜單
     agent.handleRequest(intentMap);
