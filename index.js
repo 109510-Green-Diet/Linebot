@@ -208,6 +208,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var seasoning_portion = data[0].seasoning_portion;
                 var rc_content = data[0].rc_content;
 
+                agent.add(recipe_name+grains_portion+vegetables_portion);
                 var lineMessage = {
                     "type": "flex",
                     "altText": "This is a Flex Message",
