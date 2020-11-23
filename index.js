@@ -433,10 +433,10 @@ app.post('/dialogflow', express.json(), (request, response) => {
                         },
                     }
                 };
-                */
+                
                 var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
                 agent.add(payload);
-
+*/
             }
         });
 
