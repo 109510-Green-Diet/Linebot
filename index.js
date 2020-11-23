@@ -185,6 +185,9 @@ app.post('/dialogflow', express.json(), (request, response) => {
                     "packageId": "1",
                     "stickerId": "16"
                 };
+
+                var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
+                agent.add(payload);
             } else if (data == 0) {
                 //回覆文字              
                 agent.add('喔, 目前沒有內容!');
