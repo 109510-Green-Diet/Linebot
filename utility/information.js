@@ -25,12 +25,12 @@ var BMIcal = async function (user_account) {
 //---------------------------------
 // 填寫會員姓名
 //---------------------------------
-var fillheight = async function(user_account, height, weight, infono){
+var fillheight = async function(user_account, height, weight, infono, bmino){
     //存放結果
     let result;  
     console.log(user_account);
     //寫入點餐資料表
-    await query('INSERT INTO project.information (user_account, height, weight, infono) VALUES ($1, $2, $3, $4)', [user_account, height, weight, infono])
+    await query('INSERT INTO project.information (user_account, height, weight, infono, bmino) VALUES ($1, $2, $3, $4, $5)', [user_account, height, weight, infono, bmino])
         .then((data) => {
             result = 0;    //新增成功
         }, (error) => {

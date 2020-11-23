@@ -37,12 +37,13 @@ app.post('/dialogflow', express.json(), (request, response) => {
     //------------------
     // 處理加入會員意圖
     //------------------  
-    function userJoin() {
+    function add() {
         //回覆文字
         agent.add('歡迎你!!!');
 
         //取得會員的LineID
         var user_account = request.body.originalDetectIntentRequest.payload.data.source.userId;
+
         //呼叫user模組, 寫入會員資料
         return user.add(user_account).then(data => {
             if (data == -9) {
@@ -61,9 +62,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
             } else if (data == 0) {
                 //回覆文字            
                 agent.add('會員已建立!');
-                agent.add('可填寫[姓名]及[email]收到我們的訊息!');
-                agent.add('只要用以下格式填寫即可:');
-                agent.add('姓名:XXX');
+                agent.add('請輸入「活動量」來計算卡路里');
                 agent.add('email:xxx@xxx.xxx.xxx');
 
                 //加一張貼圖
@@ -459,9 +458,18 @@ app.post('/dialogflow', express.json(), (request, response) => {
             + String('0' + currentdate.getMinutes()).substr(-2)
             + String('0' + currentdate.getSeconds()).substr(-2)
             + String('0' + currentdate.getMilliseconds()).substr(-3);
-
+        var bmino;
+        let BMI = String(Math.round(weight / ((height / 100) * (height / 100)) * 100) / 100)
+        if (BMI < 18.5) {
+            bmino = 'B001';
+        } else if (18.5 <= BMI < 24) {
+            bmino = 'B002';
+        } else {
+            bmino = 'B003';
+        }
+        console.log(bmino)
         //呼叫customer模組, 填入客戶姓名
-        return information.fillheight(user_account, Math.round(height), Math.round(weight), infono).then(data => {
+        return information.fillheight(user_account, Math.round(height), Math.round(weight), infono, bmino).then(data => {
             console.log(user_account);
             console.log(weight);
             console.log(infono);
@@ -1053,6 +1061,77 @@ app.post('/dialogflow', express.json(), (request, response) => {
         });
     }
 
+    //----------------------- 
+    // 處理今日推薦食譜意圖
+    //-----------------------     
+    function recrecipe() {
+        //取得分類
+        var user_account = request.body.originalDetectIntentRequest.payload.data.source.userId;
+        //var bmino = request.body.queryResult.parameters.bmino;
+        //console.log(bmino);
+        //呼叫menu模組, 取出分類菜單
+        return recipe.recrecipe(user_account).then(data => {
+            //console.log(data);
+            if (data == -9) {
+                console.log('data == -9');
+                //回覆文字            
+                agent.add('喔, 讀取資料錯誤(程式或資料庫出錯)!');
+            } else if (data.length == 0) {
+                console.log('data.length == 0');
+                //回覆文字              
+                agent.add('喔, 目前沒有內容!');
+
+                //回覆貼圖   
+                var lineMessage = {
+                    "type": "sticker",
+                    "packageId": "1",
+                    "stickerId": "3"
+                };
+
+                var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
+                agent.add(payload);
+            } else {
+                console.log('ccc');
+                
+                console.log('data.length');
+                console.log(data.length);
+                //console.log(bmino);
+                var cs = []
+
+                //回覆圖文選單 
+                for (var i = 0; i < data.length; i++) {
+                    cs.push({
+                        "thumbnailImageUrl": "https://eat10556ntub.herokuapp.com/pic/" + data[i].pic,
+                        "imageBackgroundColor": "#FFFFFF",
+                        "title": data[i].recipe_name,
+                        "text": "熱量:" + data[i].calories + "大卡",
+                        "actions": [{
+                            "type": "message",
+                            "label": "查看食譜",
+                            "text": "查看" + data[i].recipe_name + "完整食譜"
+
+                        }]
+                    })
+                }
+
+                console.log(cs);
+                var lineMessage = {
+                    "type": "template",
+                    "altText": "這是一個Carousel圖文選單樣板",
+                    "template": {
+                        "type": "carousel",
+                        "columns": cs,
+                        "imageAspectRatio": "square",
+                        "imageSize": "cover"
+                    }
+                };
+                
+                var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
+                agent.add(payload);
+            }
+        });
+    }
+
     //----------------------------------------
     // 可直接取用檔案的資料夾
     //----------------------------------------
@@ -1064,7 +1143,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
     let intentMap = new Map();
 
     intentMap.set('Default Welcome Intent', welcome);  //歡迎意圖
-    intentMap.set('user join', userJoin);      //加入會員意圖
+    intentMap.set('user join', add);      //加入會員意圖
     intentMap.set('search recipe', searchrecipe);
     intentMap.set('find recipe', findrecipe);   //查看菜單意圖
     intentMap.set('show recipe', showrecipe);
@@ -1072,6 +1151,8 @@ app.post('/dialogflow', express.json(), (request, response) => {
     intentMap.set('fill height', fillheight);
     intentMap.set('search active', searchactive);
     intentMap.set('fill active', fillactive);
+    intentMap.set('recommend recipe', recrecipe);
+
     //查看分類菜單
     agent.handleRequest(intentMap);
 })
