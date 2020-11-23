@@ -43,7 +43,7 @@ var findrecipe = async function(recipe_name){
     //回傳執行結果
     return result;  
 }
-/*
+
 //-------------------
 // 查看分類菜單
 //-------------------
@@ -77,7 +77,7 @@ var recrecipe = async function (user_account) {
     //回傳執行結果
     return result;
 }
-*/
+
 //-----------------------
 // 匯出函式
 //-----------------------
