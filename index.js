@@ -94,6 +94,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                     {
                         "imageBackgroundColor": "#FFFFFF",
                         "title": "身高體重",
+                        "text":"",
                         "actions": [
                             {
                                 "type": "message",
@@ -105,6 +106,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                     {
                         "imageBackgroundColor": "#000000",
                         "title": "活動量",
+                        "text":"",
                         "actions": [
                             {
                                 "type": "message",
@@ -116,7 +118,6 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 ],
 
             }
-
 
         };
         var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
