@@ -213,7 +213,6 @@ app.post('/dialogflow', express.json(), (request, response) => {
 
                 console.log('aaa');
                 console.log(grains_portion);
-                agent.add('123');
                 
                 var lineMessage = {
                     "type": "flex",
@@ -248,122 +247,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                     "layout": "vertical",
                                     "spacing": "sm",
                                     "margin": "sm",
-                                    "contents": [
-                                        {
-                                            "type": "box",
-                                            "layout": "horizontal",
-                                            "contents": [
-                                                {
-                                                    "type": "text",
-                                                    "text": "全穀雜糧類",
-                                                    "size": "sm",
-                                                    "color": "#555555",
-                                                },
-                                                {
-                                                    "type": "text",
-                                                    "text": grains_portion,
-                                                    "size": "sm",
-                                                    "color": "#111111",
-                                                    "align": "end"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "horizontal",
-                                            "contents": [
-                                                {
-                                                    "type": "text",
-                                                    "text": "蔬菜類",
-                                                    "size": "sm",
-                                                    "color": "#555555",
-                                                },
-                                                {
-                                                    "type": "text",
-                                                    "text": vegetables_portion,
-                                                    "size": "sm",
-                                                    "color": "#111111",
-                                                    "align": "end"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "horizontal",
-                                            "contents": [
-                                                {
-                                                    "type": "text",
-                                                    "text": "豆類",
-                                                    "size": "sm",
-                                                    "color": "#555555",
-                                                },
-                                                {
-                                                    "type": "text",
-                                                    "text": bean_portion,
-                                                    "size": "sm",
-                                                    "color": "#111111",
-                                                    "align": "end"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "horizontal",
-                                            "contents": [
-                                                {
-                                                    "type": "text",
-                                                    "text": "乳品類",
-                                                    "size": "sm",
-                                                    "color": "#555555",
-                                                },
-                                                {
-                                                    "type": "text",
-                                                    "text": dairy_portion,
-                                                    "size": "sm",
-                                                    "color": "#111111",
-                                                    "align": "end"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "horizontal",
-                                            "contents": [
-                                                {
-                                                    "type": "text",
-                                                    "text": "水果類",
-                                                    "size": "sm",
-                                                    "color": "#555555",
-                                                },
-                                                {
-                                                    "type": "text",
-                                                    "text": fruit_portion,
-                                                    "size": "sm",
-                                                    "color": "#111111",
-                                                    "align": "end"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "horizontal",
-                                            "contents": [
-                                                {
-                                                    "type": "text",
-                                                    "text": "油脂與堅果種子類",
-                                                    "size": "sm",
-                                                    "color": "#555555",
-                                                },
-                                                {
-                                                    "type": "text",
-                                                    "text": fats_portion,
-                                                    "size": "sm",
-                                                    "color": "#111111",
-                                                    "align": "end"
-                                                }
-                                            ]
-                                        },
-                                    ]
+                                    
                                 },
                                 {
                                     "type": "separator",
