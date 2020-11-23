@@ -233,31 +233,32 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                     "margin": "xxl"
                                 },
                                 {
+                                    "type": "text",
+                                    "text": "營養分類",
+                                    "weight": "bold",
+                                    "color": "#1DB446",
+                                    "size": "sm",
+                                    "margin": "md"
+                                },
+                                {
                                     "type": "box",
                                     "layout": "vertical",
-                                    "margin": "xxl",
                                     "spacing": "sm",
+                                    "margin": "sm",
                                     "contents": [
-                                        {
-                                            "type": "text",
-                                            "text": "營養分類",
-                                            "weight": "bold",
-                                            "color": "#1DB446",
-                                            "size": "md"
-                                        },
                                         {
                                             "type": "box",
                                             "layout": "horizontal",
                                             "contents": [
                                                 {
                                                     "type": "text",
-                                                    "text": "全榖雜糧類",
+                                                    "text": "全穀雜糧類",
                                                     "size": "sm",
                                                     "color": "#555555",
                                                 },
                                                 {
                                                     "type": "text",
-                                                    "text": grains_portion + "份",
+                                                    "text": grains_portion,
                                                     "size": "sm",
                                                     "color": "#111111",
                                                     "align": "end"
@@ -276,7 +277,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                                 },
                                                 {
                                                     "type": "text",
-                                                    "text": vegetables_portion + "份",
+                                                    "text": vegetables_portion,
                                                     "size": "sm",
                                                     "color": "#111111",
                                                     "align": "end"
@@ -295,7 +296,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                                 },
                                                 {
                                                     "type": "text",
-                                                    "text": bean_portion + "份",
+                                                    "text": bean_portion,
                                                     "size": "sm",
                                                     "color": "#111111",
                                                     "align": "end"
@@ -314,7 +315,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                                 },
                                                 {
                                                     "type": "text",
-                                                    "text": dairy_portion + "份",
+                                                    "text": dairy_portion,
                                                     "size": "sm",
                                                     "color": "#111111",
                                                     "align": "end"
@@ -333,7 +334,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                                 },
                                                 {
                                                     "type": "text",
-                                                    "text": fruit_portion + "份",
+                                                    "text": fruit_portion,
                                                     "size": "sm",
                                                     "color": "#111111",
                                                     "align": "end"
@@ -352,7 +353,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                                 },
                                                 {
                                                     "type": "text",
-                                                    "text": fats_portion + "份",
+                                                    "text": fats_portion,
                                                     "size": "sm",
                                                     "color": "#111111",
                                                     "align": "end"
@@ -365,75 +366,11 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                     "type": "separator",
                                     "margin": "xxl"
                                 },
-                                {
-                                    "type": "box",
-                                    "layout": "vertical",
-                                    "margin": "xxl",
-                                    "spacing": "sm",
-                                    "contents": [
-                                        {
-                                            "type": "text",
-                                            "text": "食材",
-                                            "weight": "bold",
-                                            "color": "#1DB446",
-                                            "size": "md"
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "vertical",
-                                            "contents": [
-                                                {
-                                                    "type": "text",
-                                                    "text": seasoning_portion,
-                                                    "size": "sm",
-                                                    "color": "#555555",
-                                                },
-
-                                            ]
-                                        },
-                                    ]
-                                },
-                                {
-                                    "type": "separator",
-                                    "margin": "xxl"
-                                },
-                                {
-                                    "type": "box",
-                                    "layout": "vertical",
-                                    "margin": "xxl",
-                                    "spacing": "sm",
-                                    "contents": [
-                                        {
-                                            "type": "text",
-                                            "text": "步驟",
-                                            "weight": "bold",
-                                            "color": "#1DB446",
-                                            "size": "md"
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "vertical",
-
-                                            "contents": [
-                                                {
-                                                    "type": "text",
-                                                    "text": rc_content,
-                                                    "size": "sm",
-                                                    "color": "#555555",
-                                                    "wrap": true,
-                                                },
-
-                                            ]
-                                        },
-                                    ]
-                                },
-
+                         
                             ]
-
-                        },
+                        }
                     }
                 };
-                
                 var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
                 agent.add(payload);
 
