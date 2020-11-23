@@ -233,7 +233,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
 
                 var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
                 agent.add(payload);
-            } else if (data == 0) {
+            } else if (data.length == 0) {
                 //回覆文字              
                 agent.add('喔, 目前沒有內容!');
 
