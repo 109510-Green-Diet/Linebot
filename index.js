@@ -208,7 +208,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var seasoning_portion = data[0].seasoning_portion;
                 var rc_content = data[0].rc_content;
 
-                agent.add('aaa');
+                console.log('aaa');
                 var lineMessage = {
                     "type": "flex",
                     "altText": "This is a Flex Message",
@@ -1119,7 +1119,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var lineMessage = {
                     "type": "template",
                     "altText": "這是一個Carousel圖文選單樣板",
-                    "template": {
+                    "template": {                                                                     
                         "type": "carousel",
                         "columns": cs,
                         "imageAspectRatio": "square",
