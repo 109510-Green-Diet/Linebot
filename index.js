@@ -380,7 +380,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                             "contents": [
                                                 {
                                                     "type": "text",
-                                                    "text": seasoning_use,
+                                                    "text": seasoning_portion,
                                                     "size": "sm",
                                                     "color": "#555555",
                                                 },
