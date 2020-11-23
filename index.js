@@ -84,45 +84,8 @@ app.post('/dialogflow', express.json(), (request, response) => {
     // 處理查詢食譜意圖
     //------------------   
     function upin() {
-        //回覆文字
-        var lineMessage = {
-            "type": "template",
-            "altText": "this is a carousel template",
-            "template": {
-                "type": "carousel",
-                "columns": [
-                    {
-                        "imageBackgroundColor": "#FFFFFF",
-                        "title": "身高體重",
-                        "text":"",
-                        "actions": [
-                            {
-                                "type": "message",
-                                "label": "更新身高體重",
-                                "text": "身高體重"
-                            },
-                        ]
-                    },
-                    {
-                        "imageBackgroundColor": "#000000",
-                        "title": "活動量",
-                        "text":"",
-                        "actions": [
-                            {
-                                "type": "message",
-                                "label": "更新活動量",
-                                "text": "活動量"
-                            },
-                        ]
-                    },
-                ],
-
-            }
-
-        };
-        var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
-        agent.add(payload);
-
+        agent.add('如欲更新身高體重,請輸入"身高體重"');
+        agent.add('如欲更新活動量,請輸入"活動量"');
 
     }
 
