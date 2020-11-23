@@ -211,7 +211,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 console.log('aaa');
                 console.log(grains_portion);
                 agent.add('123');
-                /*
+                
                 var lineMessage = {
                     "type": "flex",
                     "altText": "This is a Flex Message",
@@ -436,7 +436,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 
                 var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
                 agent.add(payload);
-*/
+
             }
         });
 
