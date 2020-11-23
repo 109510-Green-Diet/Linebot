@@ -35,7 +35,6 @@ var findrecipe = async function(recipe_name){
     //讀取資料庫
     await query('SELECT * FROM project.recipe WHERE recipe_name = $1', [recipe_name])
         .then((data) => {
-            console.log(data.rows);
             result = data.rows;   //查詢成功
         }, (error) => {
             result = -9;          //查詢失敗
@@ -44,7 +43,7 @@ var findrecipe = async function(recipe_name){
     //回傳執行結果
     return result;  
 }
-
+/*
 //-------------------
 // 查看分類菜單
 //-------------------
@@ -78,7 +77,7 @@ var recrecipe = async function (user_account) {
     //回傳執行結果
     return result;
 }
-
+*/
 //-----------------------
 // 匯出函式
 //-----------------------
