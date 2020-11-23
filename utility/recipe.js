@@ -4,14 +4,14 @@
 const query = require('./asyncDB');
 
 //-------------------
-// 查看分類菜單
+// 查看食譜分類
 //-------------------
 var showrecipe = async function(recipe_name){
     
     //存放結果
     let result;  
     recipe_name = "%" + recipe_name + "%";
-    console.log(recipe_name);
+
     //讀取資料庫
     await query('SELECT * FROM project.recipe WHERE recipe_name like $1 order by random() limit 10', [recipe_name])
         .then((data) => {
@@ -26,7 +26,7 @@ var showrecipe = async function(recipe_name){
 }
 
 //-------------------
-// 查看分類菜單
+// 查看食譜內容
 //-------------------
 var findrecipe = async function(recipe_name){
     
