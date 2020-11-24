@@ -440,6 +440,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
             } else {
                 function cs() {
                 for (var i = 0; i < data.length; i++) {
+                    var cs = [
                         {
                             "type": "box",
                             "layout": "baseline",
@@ -459,7 +460,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                 }
                             ]
                         }
-                    }
+                    ]}
                 };
                 console.log(cs);
                 var lineMessage = {
