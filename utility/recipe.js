@@ -13,7 +13,7 @@ var showrecipe = async function(recipe_name){
     recipe_name = "%" + recipe_name + "%";
 
     //讀取資料庫
-    await query('select recipe.recipe_name, recipe.recipeno, floor( SUM( (record_food.gram / cast(food.gram as decimal)) * food.calories ) ) as tot_cals from project.recipe left join project.record_food on recipe.recipeno = record_food.recipeno left join project.food on record_food.foodno = food.foodno WHERE recipe_name like $1 group by recipe.recipeno order by random() limit 10', [recipe_name])
+    await query('select recipe.recipe_name, recipe.recipeno, floor( SUM( (record_food.gram / cast(food.gram as decimal)) * food.calories ) ) From project.recipe left join project.record_food on recipe.recipeno = record_food.recipeno left join project.food on record_food.foodno = food.foodno WHERE recipe_name like $1 group by recipe.recipeno order by random() limit 10', [recipe_name])
         .then((data) => {
             console.log(data.rows);
             result = data.rows;   //查詢成功
