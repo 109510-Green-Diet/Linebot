@@ -157,8 +157,8 @@ app.post('/dialogflow', express.json(), (request, response) => {
                         },
                         {
                             "type": "message",
-                            "label": "查看食譜",
-                            "text": "查看" + data[i].recipe_name + "完整食譜"
+                            "label": "查看食材",
+                            "text": "查看" + data[i].recipe_name + "食材"
 
                         }]
                     })
@@ -402,6 +402,79 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                     ]
                                 },
 
+                            ]
+
+                        },
+                    }
+                };
+                var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
+                agent.add(payload);
+
+            }
+        });
+
+    }
+
+    //-----------------------
+    // 顯示食譜
+    //-----------------------     
+    function findfood() {
+        //取得分類
+        var recipe_name = request.body.queryResult.parameters.recipe_name;
+
+        return recipe.findrecipe(recipe_name).then(data => {
+            if (data == -9) {
+                //回覆文字            
+                agent.add('喔, 讀取資料錯誤(程式或資料庫出錯)!');
+
+            } else if (data.length == 0) {
+                //回覆文字              
+                agent.add('喔, 目前沒有內容!');
+
+                //回覆貼圖   
+                var lineMessage = {
+                    "type": "sticker",
+                    "packageId": "1",
+                    "stickerId": "3"
+                };
+
+                var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
+                agent.add(payload);
+            } else {
+                var cs =[];
+                for (var i = 0; i < data.length; i++) {
+                    cs.push({
+                        "thumbnailImageUrl": "https://eat10556ntub.herokuapp.com/pic/" + data[i].pic,
+                        "imageBackgroundColor": "#FFFFFF",
+                        "title": data[i].recipe_name,
+                        "text": "熱量:" + data[i].calories + "大卡",
+                        "actions": [{
+                            "type": "message",
+                            "label": "查看食譜",
+                            "text": "查看" + data[i].recipe_name + "完整食譜"
+
+                        },
+                        {
+                            "type": "message",
+                            "label": "查看食材",
+                            "text": "查看" + data[i].recipe_name + "食材"
+
+                        }]
+                    })
+                }
+                
+                console.log('aaa');
+                
+                var lineMessage = {
+                    "type": "flex",
+                    "altText": "This is a Flex Message",
+                    "contents": {
+                        "type": "bubble",
+                        "header": {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                                
                             ]
 
                         },
@@ -1125,6 +1198,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
     intentMap.set('user join', add);      //加入會員意圖
     intentMap.set('search recipe', searchrecipe);
     intentMap.set('find recipe', findrecipe);   //查看菜單意圖
+    intentMap.set('find food', findfood);
     intentMap.set('show recipe', showrecipe);
     intentMap.set('check BMI and cal', BMIcal);
     intentMap.set('fill height', fillheight);
