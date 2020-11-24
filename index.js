@@ -211,7 +211,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var rc_content = data[0].rc_content;
 
                 console.log('aaa');
-                console.log(grains_portion);
+                console.log(foodno);
                 
                 var lineMessage = {
                     "type": "flex",
