@@ -392,26 +392,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                     "margin": "xxl",
                                     "spacing": "sm",
                                     "contents": [
-                                        {
-                                            "type": "text",
-                                            "text": "食材",
-                                            "weight": "bold",
-                                            "color": "#1DB446",
-                                            "size": "md"
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "vertical",
-
-                                            "contents": [
-                                                {
-                                                    "type": "text",
-                                                    "columns": cs,
-
-                                                },
-
-                                            ]
-                                        },
+                                        new cs()
                                     ]
                                 },
                                 {
