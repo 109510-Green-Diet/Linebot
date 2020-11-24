@@ -62,7 +62,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
             } else if (data == 0) {
                 //回覆文字            
                 agent.add('會員已建立!');
-                agent.add('請輸入「活動量」來計算卡路里');
+                agent.add('請輸入「身高體重」「活動量」來計算卡路里');
 
                 //加一張貼圖
                 var lineMessage = {
