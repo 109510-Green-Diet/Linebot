@@ -438,37 +438,30 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
                 agent.add(payload);
             } else {
-                var cs = [];
+                function cs() {
                 for (var i = 0; i < data.length; i++) {
                     cs.push(
-
                         {
                             "type": "box",
-                            "layout": "vertical",
-                            "spacing": "sm",
+                            "layout": "baseline",
                             "contents": [
                                 {
-                                    "type": "box",
-                                    "layout": "baseline",
-                                    "contents": [
-                                        {
-                                            "type": "text",
-                                            "text": data[i].record_food,
-                                            "margin": "sm",
-                                            "color": "#555555",
-                                        },
-                                        {
-                                            "type": "text",
-                                            "text": data[i].gram + "公克",
-                                            "size": "sm",
-                                            "color": "#111111",
-                                            "align": "end"
-                                        }
-                                    ]
+                                    "type": "text",
+                                    "text": data[i].record_food,
+                                    "margin": "sm",
+                                    "color": "#555555",
                                 },
+                                {
+                                    "type": "text",
+                                    "text": data[i].gram + "公克",
+                                    "size": "sm",
+                                    "color": "#111111",
+                                    "align": "end"
+                                }
                             ]
-                        })
-                };
+                        },
+                    )
+                }};
                 console.log(cs);
                 var lineMessage = {
                     "type": "flex",
@@ -485,9 +478,15 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                     "weight": "bold",
                                     "size": "xl",
                                     "margin": "md",
-                                    "columns": cs,
                                 },
-                                
+                                {
+                                    "type": "box",
+                                    "layout": "vertical",
+                                    "spacing": "sm",
+                                    "contents": [
+                                        cs(),
+                                    ]
+                                }
                             ]
 
                         },
