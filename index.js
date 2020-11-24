@@ -469,7 +469,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                             ]
                         })
                 };
-                //console.log(cs);
+                console.log(cs);
                 var lineMessage = {
                     "type": "flex",
                     "altText": "This is a Flex Message",
@@ -481,7 +481,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                             "contents": [
                                 {
                                     "type": "text",
-                                    "text": data[i].recipe_name,
+                                    "text": recipe_name,
                                     "weight": "bold",
                                     "size": "xl",
                                     "margin": "md",
