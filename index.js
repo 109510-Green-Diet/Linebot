@@ -419,7 +419,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
         //取得分類
         var recipe_name = request.body.queryResult.parameters.recipe_name;
 
-        return recipe.findrecipe(recipe_name).then(data => {
+        return recipe.findfood(recipe_name).then(data => {
             if (data == -9) {
                 //回覆文字            
                 agent.add('喔, 讀取資料錯誤(程式或資料庫出錯)!');
