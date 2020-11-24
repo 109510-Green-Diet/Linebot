@@ -215,8 +215,6 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var fats_portion = data[0].fats_portion;
                 var rc_content = data[0].rc_content;
 
-                console.log('aaa');
-
                 var lineMessage = {
                     "type": "flex",
                     "altText": "This is a Flex Message",
@@ -443,13 +441,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var cs = [];
                 for (var i = 0; i < data.length; i++) {
                     cs.push(
-                        {
-                            "type": "text",
-                            "text": data[i].recipe_name,
-                            "weight": "bold",
-                            "size": "xl",
-                            "margin": "md"
-                        },
+
                         {
                             "type": "box",
                             "layout": "vertical",
@@ -487,7 +479,15 @@ app.post('/dialogflow', express.json(), (request, response) => {
                             "type": "box",
                             "layout": "vertical",
                             "contents": [
-                                cs()
+                                {
+                                    "type": "text",
+                                    "text": data[i].recipe_name,
+                                    "weight": "bold",
+                                    "size": "xl",
+                                    "margin": "md",
+                                    "columns": cs,
+                                },
+                                
                             ]
 
                         },
