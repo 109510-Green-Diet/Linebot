@@ -154,6 +154,12 @@ app.post('/dialogflow', express.json(), (request, response) => {
                             "label": "查看食譜",
                             "text": "查看" + data[i].recipe_name + "完整食譜"
 
+                        }],
+                        "actions": [{
+                            "type": "message",
+                            "label": "查看食譜",
+                            "text": "查看" + data[i].recipe_name + "完整食譜"
+
                         }]
                     })
                 }
