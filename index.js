@@ -208,7 +208,6 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var dairy_portion = data[0].dairy_portion;
                 var fruit_portion = data[0].fruit_portion;
                 var fats_portion = data[0].fats_portion;
-                var seasoning_portion = data[0].seasoning_portion;
                 var rc_content = data[0].rc_content;
 
                 console.log('aaa');
@@ -366,34 +365,6 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                 {
                                     "type": "separator",
                                     "margin": "xxl"
-                                },
-                                {
-                                    "type": "box",
-                                    "layout": "vertical",
-                                    "margin": "xxl",
-                                    "spacing": "sm",
-                                    "contents": [
-                                        {
-                                            "type": "text",
-                                            "text": "食材",
-                                            "weight": "bold",
-                                            "color": "#1DB446",
-                                            "size": "md"
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "vertical",
-                                            "contents": [
-                                                {
-                                                    "type": "text",
-                                                    "text": seasoning_portion,
-                                                    "size": "sm",
-                                                    "color": "#555555",
-                                                },
-
-                                            ]
-                                        },
-                                    ]
                                 },
                                 {
                                     "type": "separator",
