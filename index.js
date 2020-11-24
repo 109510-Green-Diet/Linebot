@@ -209,8 +209,29 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var fruit_portion = data[0].fruit_portion;
                 var fats_portion = data[0].fats_portion;
                 var rc_content = data[0].rc_content;
-
+                var cs = [];
                 console.log('aaa');
+                for (var i = 0; i < data.length; i++){
+                    cs.push({
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": data[i].foodname,
+                                    "size": "sm",
+                                    "color": "#555555",
+                                },
+                                {
+                                    "type": "text",
+                                    "text": data[i].gram + "公克",
+                                    "size": "sm",
+                                    "color": "#111111",
+                                    "align": "end"
+                                }
+                            ]
+                    })
+                }
                 
                 var lineMessage = {
                     "type": "flex",
@@ -357,6 +378,38 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                                     "color": "#111111",
                                                     "align": "end"
                                                 }
+                                            ]
+                                        },
+                                    ]
+                                },
+                                {
+                                    "type": "separator",
+                                    "margin": "xxl"
+                                },
+                                {
+                                    "type": "box",
+                                    "layout": "vertical",
+                                    "margin": "xxl",
+                                    "spacing": "sm",
+                                    "contents": [
+                                        {
+                                            "type": "text",
+                                            "text": "食材",
+                                            "weight": "bold",
+                                            "color": "#1DB446",
+                                            "size": "md"
+                                        },
+                                        {
+                                            "type": "box",
+                                            "layout": "vertical",
+
+                                            "contents": [
+                                                {
+                                                    "type": "text",
+                                                    "columns": cs,
+
+                                                },
+
                                             ]
                                         },
                                     ]
