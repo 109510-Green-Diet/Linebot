@@ -33,7 +33,7 @@ var findrecipe = async function(recipe_name){
     //存放結果
     let result;  
     //讀取資料庫
-    await query('SELECT a.recipe_name, a.rc_content, a.grains_portion, a.vegetables_portion, a.bean_portion, a.dairy_portion, a.fruit_portion, a.fats_portion, a.recipeno, b.foodno, b.gram, c.food_name FROM project.recipe as a join project.record_food as b on a.recipeno = b.recipeno join project.food as c on c.foodno = b.foodno WHERE recipe_name = $1', [recipe_name])
+    await query('SELECT * FROM project.recipe WHERE recipe_name = $1', [recipe_name])
         .then((data) => {
             result = data.rows;   //查詢成功
         }, (error) => {

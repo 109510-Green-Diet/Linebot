@@ -209,30 +209,9 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var fruit_portion = data[0].fruit_portion;
                 var fats_portion = data[0].fats_portion;
                 var rc_content = data[0].rc_content;
-                var cs = [];
+
                 console.log('aaa');
-                for (var i = 0; i < data.length; i++){
-                    cs.push({
-                            "type": "box",
-                            "layout": "horizontal",
-                            "contents": [
-                                {
-                                    "type": "text",
-                                    "text": data[i].foodname,
-                                    "size": "sm",
-                                    "color": "#555555",
-                                },
-                                {
-                                    "type": "text",
-                                    "text": data[i].gram + "公克",
-                                    "size": "sm",
-                                    "color": "#111111",
-                                    "align": "end"
-                                }
-                            ]
-                    })
-                }
-                console.log(cs);
+                
                 var lineMessage = {
                     "type": "flex",
                     "altText": "This is a Flex Message",
@@ -380,19 +359,6 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                                 }
                                             ]
                                         },
-                                    ]
-                                },
-                                {
-                                    "type": "separator",
-                                    "margin": "xxl"
-                                },
-                                {
-                                    "type": "box",
-                                    "layout": "vertical",
-                                    "margin": "xxl",
-                                    "spacing": "sm",
-                                    "contents": [
-                                        new cs()
                                     ]
                                 },
                                 {
