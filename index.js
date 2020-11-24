@@ -469,7 +469,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                             ]
                         })
                 };
-
+                console.log(cs);
                 var lineMessage = {
                     "type": "flex",
                     "altText": "This is a Flex Message",
