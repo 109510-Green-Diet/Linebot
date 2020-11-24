@@ -63,7 +63,6 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 //回覆文字            
                 agent.add('會員已建立!');
                 agent.add('請輸入「活動量」來計算卡路里');
-                agent.add('email:xxx@xxx.xxx.xxx');
 
                 //加一張貼圖
                 var lineMessage = {
@@ -217,7 +216,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var rc_content = data[0].rc_content;
 
                 console.log('aaa');
-                
+
                 var lineMessage = {
                     "type": "flex",
                     "altText": "This is a Flex Message",
@@ -441,30 +440,44 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
                 agent.add(payload);
             } else {
-                var cs =[];
+                var cs = new BubbleContainer;
                 for (var i = 0; i < data.length; i++) {
-                    cs.push({
-                        "thumbnailImageUrl": "https://eat10556ntub.herokuapp.com/pic/" + data[i].pic,
-                        "imageBackgroundColor": "#FFFFFF",
-                        "title": data[i].recipe_name,
-                        "text": "熱量:" + data[i].calories + "大卡",
-                        "actions": [{
-                            "type": "message",
-                            "label": "查看食譜",
-                            "text": "查看" + data[i].recipe_name + "完整食譜"
-
+                    cs.push(
+                        {
+                            "type": "text",
+                            "text": data[i].recipe_name,
+                            "weight": "bold",
+                            "size": "xl",
+                            "margin": "md"
                         },
                         {
-                            "type": "message",
-                            "label": "查看食材",
-                            "text": "查看" + data[i].recipe_name + "食材"
+                            "type": "box",
+                            "layout": "vertical",
+                            "spacing": "sm",
+                            "contents": [
+                                {
+                                    "type": "box",
+                                    "layout": "baseline",
+                                    "contents": [
+                                        {
+                                            "type": "text",
+                                            "text": data[i].record_food,
+                                            "margin": "sm",
+                                            "color": "#555555",
+                                        },
+                                        {
+                                            "type": "text",
+                                            "text": data[i].gram + "公克",
+                                            "size": "sm",
+                                            "color": "#111111",
+                                            "align": "end"
+                                        }
+                                    ]
+                                },
+                            ]
+                        })
+                };
 
-                        }]
-                    })
-                }
-
-                console.log('aaa');
-                
                 var lineMessage = {
                     "type": "flex",
                     "altText": "This is a Flex Message",
@@ -474,7 +487,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                             "type": "box",
                             "layout": "vertical",
                             "contents": [
-                                
+                                new BubbleContainer()
                             ]
 
                         },
@@ -1144,7 +1157,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 agent.add(payload);
             } else {
                 console.log('ccc');
-                
+
                 console.log('data.length');
                 console.log(data.length);
                 //console.log(bmino);
@@ -1176,14 +1189,14 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var lineMessage = {
                     "type": "template",
                     "altText": "這是一個Carousel圖文選單樣板",
-                    "template": {                                                                     
+                    "template": {
                         "type": "carousel",
                         "columns": cs,
                         "imageAspectRatio": "square",
                         "imageSize": "cover"
                     }
                 };
-                
+
                 var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
                 agent.add(payload);
             }
