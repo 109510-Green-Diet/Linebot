@@ -440,7 +440,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
                 agent.add(payload);
             } else {
-                var cs = new BubbleContainer;
+                var cs = [];
                 for (var i = 0; i < data.length; i++) {
                     cs.push(
                         {
@@ -487,7 +487,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                             "type": "box",
                             "layout": "vertical",
                             "contents": [
-                                new BubbleContainer()
+                                cs()
                             ]
 
                         },
