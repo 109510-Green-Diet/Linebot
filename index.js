@@ -462,7 +462,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                         }]
                     })
                 }
-                
+
                 console.log('aaa');
                 
                 var lineMessage = {
@@ -1161,6 +1161,12 @@ app.post('/dialogflow', express.json(), (request, response) => {
                             "type": "message",
                             "label": "查看食譜",
                             "text": "查看" + data[i].recipe_name + "完整食譜"
+
+                        },
+                        {
+                            "type": "message",
+                            "label": "查看食材",
+                            "text": "查看" + data[i].recipe_name + "食材"
 
                         }]
                     })
