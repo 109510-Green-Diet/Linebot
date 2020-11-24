@@ -55,7 +55,6 @@ var findfood = async function(recipe_name){
     await query('SELECT a.recipe_name, a.recipeno, b.foodno, b.gram, c.food_name FROM project.recipe as a join project.record_food as b on a.recipeno = b.recipeno join project.food as c on b.foodno = c.foodno WHERE recipe_name = $1', [recipe_name])
         .then((data) => {
             result = data.rows;   //查詢成功
-            console.log(data.rows);
         }, (error) => {
             result = -9;          //查詢失敗
         });
