@@ -367,10 +367,6 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                     "margin": "xxl"
                                 },
                                 {
-                                    "type": "separator",
-                                    "margin": "xxl"
-                                },
-                                {
                                     "type": "box",
                                     "layout": "vertical",
                                     "margin": "xxl",
