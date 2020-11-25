@@ -84,7 +84,7 @@ var recrecipe = async function (user_account) {
         });
 
     console.log(bmino2);
-    await query('SELECT * FROM project.recipe WHERE bmino = $1 order by random() limit 10', [bmino2])
+    await query('SELECT recipe.pic, recipe.recipe_name, recipe.recipeno, floor( SUM( (record_food.gram / cast(food.gram as decimal)) * food.calories ) ) as calories From project.recipe left join project.record_food on recipe.recipeno = record_food.recipeno left join project.food on record_food.foodno = food.foodno WHERE bmino = $1 group by recipe.recipeno order by random() limit 10', [bmino2])
     .then((data) => {
         result = data.rows;
         console.log("5678")

@@ -438,10 +438,10 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
                 agent.add(payload);
             } else {
-                var cs = []
-               
+                function cs() {
                 for (var i = 0; i < data.length; i++) {
-                        cs.push({
+                    var cs = [
+                        {
                             "type": "box",
                             "layout": "baseline",
                             "contents": [
@@ -459,15 +459,15 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                     "align": "end"
                                 }
                             ]
-                        })
-                    };
-                    
+                        }
+                    ]}
+                };
                 console.log(cs);
                 var lineMessage = {
                     "type": "flex",
                     "altText": "This is a Flex Message",
                     "contents": {
-                        "type": "carousel",
+                        "type": "bubble",
                         "header": {
                             "type": "box",
                             "layout": "vertical",
@@ -480,12 +480,11 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                     "margin": "md",
                                 },
                                 {
-                                    "type": "carousel",
+                                    "type": "box",
                                     "layout": "vertical",
                                     "spacing": "sm",
-                                    "contents": [{
-                                        "columns": cs,
-                                    }
+                                    "contents": [
+                                        cs(),
                                     ]
                                 }
                             ]
