@@ -438,10 +438,10 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
                 agent.add(payload);
             } else {
-                function cs() {
+                var cs = []
+               
                 for (var i = 0; i < data.length; i++) {
-                    var cs = [
-                        {
+                        cs.push({
                             "type": "box",
                             "layout": "baseline",
                             "contents": [
@@ -459,9 +459,9 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                     "align": "end"
                                 }
                             ]
-                        }
-                    ]}
-                };
+                        })
+                    };
+                    
                 console.log(cs);
                 var lineMessage = {
                     "type": "flex",
