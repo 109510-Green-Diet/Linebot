@@ -73,7 +73,15 @@ var recrecipe = async function (user_account) {
     console.log("aaa")
     let bmino2;
     //讀取資料庫
-
+    
+    await query('select floor( SUM( (record_food.gram / cast(food.gram as decimal)) * food.calories ) ) as calories From project.recipe left join project.record_food on recipe.recipeno = record_food.recipeno left join project.food on record_food.foodno = food.foodno WHERE recipe_name like $1 group by recipe.recipeno order by random() limit 10', [recipe_name])
+        .then((data) => {
+            console.log(data.rows);
+            result = data.rows;   //查詢成功
+        }, (error) => {
+            result = -9;          //查詢失敗
+        });
+        
     await query('SELECT bmino FROM project.information WHERE user_account = $1 order by infono desc limit 1', [user_account])
         .then((data) => {
             bmino2 = data.rows[0].bmino;  //查詢成功
@@ -93,13 +101,6 @@ var recrecipe = async function (user_account) {
         result = -9;          //查詢失敗
     });
 
-    await query('select floor( SUM( (record_food.gram / cast(food.gram as decimal)) * food.calories ) ) as calories From project.recipe left join project.record_food on recipe.recipeno = record_food.recipeno left join project.food on record_food.foodno = food.foodno WHERE recipe_name like $1 group by recipe.recipeno order by random() limit 10', [recipe_name])
-        .then((data) => {
-            console.log(data.rows);
-            result = data.rows;   //查詢成功
-        }, (error) => {
-            result = -9;          //查詢失敗
-        });
 
     //回傳執行結果
     return result;  
