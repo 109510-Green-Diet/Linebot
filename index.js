@@ -480,7 +480,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                     "margin": "md",
                                 },
                                 {
-                                    "type": "box",
+                                    "type": "carousel",
                                     "layout": "vertical",
                                     "spacing": "sm",
                                     "contents": [{
