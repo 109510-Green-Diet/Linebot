@@ -483,8 +483,9 @@ app.post('/dialogflow', express.json(), (request, response) => {
                                     "type": "box",
                                     "layout": "vertical",
                                     "spacing": "sm",
-                                    "contents": [
-                                        cs(),
+                                    "contents": [{
+                                        "columns": cs,
+                                    }
                                     ]
                                 }
                             ]
