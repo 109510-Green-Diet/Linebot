@@ -467,7 +467,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                     "type": "flex",
                     "altText": "This is a Flex Message",
                     "contents": {
-                        "type": "bubble",
+                        "type": "carousel",
                         "header": {
                             "type": "box",
                             "layout": "vertical",
