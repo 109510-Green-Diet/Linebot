@@ -552,7 +552,7 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 agent.add(payload);
             } else {
                 //回覆文字             
-                agent.add('填寫失敗, 請再試試!');
+                agent.add('填寫失敗, 請確認是否加入會員!');
 
                 //回覆貼圖     
                 var lineMessage = {
