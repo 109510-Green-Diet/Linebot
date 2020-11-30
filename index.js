@@ -438,34 +438,35 @@ app.post('/dialogflow', express.json(), (request, response) => {
                 var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
                 agent.add(payload);
             } else {
-                function cs() {
+                var cs = []
+
+                //回覆圖文選單 
                 for (var i = 0; i < data.length; i++) {
-                    var cs = [
-                        {
-                            "type": "box",
-                            "layout": "baseline",
-                            "contents": [
-                                {
-                                    "type": "text",
-                                    "text": data[i].record_food,
-                                    "margin": "sm",
-                                    "color": "#555555",
-                                },
-                                {
-                                    "type": "text",
-                                    "text": data[i].gram + "公克",
-                                    "size": "sm",
-                                    "color": "#111111",
-                                    "align": "end"
-                                }
-                            ]
-                        }
-                    ]}
-                };
+                    cs.push({
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                            {
+                                "type": "text",
+                                "text": data[i].food_name,
+                                "size": "sm",
+                                "color": "#555555",
+                            },
+                            {
+                                "type": "text",
+                                "text": data[i].gram + "公克",
+                                "size": "sm",
+                                "color": "#111111",
+                                "align": "end"
+                            }
+                        ]
+                    },)
+                }
+
                 console.log(cs);
                 var lineMessage = {
                     "type": "flex",
-                    "altText": "This is a Flex Message",
+                    "altText": "這是一個Flex Message",
                     "contents": {
                         "type": "bubble",
                         "header": {
@@ -474,30 +475,31 @@ app.post('/dialogflow', express.json(), (request, response) => {
                             "contents": [
                                 {
                                     "type": "text",
-                                    "text": recipe_name,
+                                    "text": recipe_name + " - 食材",
                                     "weight": "bold",
                                     "size": "xl",
-                                    "margin": "md",
+                                    "margin": "md"
+                                },
+                                {
+                                    "type": "separator",
+                                    "margin": "xl"
                                 },
                                 {
                                     "type": "box",
                                     "layout": "vertical",
                                     "spacing": "sm",
-                                    "contents": [
-                                        cs(),
-                                    ]
+                                    "margin": "xl",
+                                    "contents":cs
                                 }
                             ]
-
-                        },
+                        }
                     }
                 };
+
                 var payload = new Payload('LINE', lineMessage, { sendAsMessage: true });
                 agent.add(payload);
-
             }
         });
-
     }
 
     //-----------------------
